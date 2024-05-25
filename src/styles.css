@@ -13,32 +13,41 @@ body * {
 
 .drop-element * {
   padding: 5px;
+  transition: 0.1s;
 }
 
 .drop-title,
 .drop-list {
   border: solid black 1px;
-  position: relative;
 }
 
 .drop-title {
   background-color: rgb(60, 60, 186);
   border-radius: 5px;
-  z-index: 10;
+  cursor: pointer;
+}
+
+.drop-title:hover {
+  background-color: rgb(60, 80, 186);
 }
 
 .drop-list {
+  display: none;
   border-top: none;
   background-color: rgb(75, 75, 186);
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0.1);
 }
 
 .drop-list-element {
   margin: 0 5px;
   border-bottom: solid rgba(255, 255, 255, 0.3) 1px;
+  cursor: pointer;
 }
 
 .drop-list-element:last-child {
   border-bottom: none;
+}
+
+.drop-list-element:hover {
+  background-color: rgb(75, 95, 186);
 }
