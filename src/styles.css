@@ -5,10 +5,15 @@ body * {
   padding: 0;
 }
 
+.dropdowns {
+  display: flex;
+}
+
 .drop-element {
   color: white;
   width: 150px;
   text-align: center;
+  margin: 10px;
 }
 
 .drop-element * {

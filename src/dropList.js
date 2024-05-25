@@ -1,18 +1,24 @@
-const dropTitle = document.querySelector(".drop-title");
-const dropList = document.querySelector(".drop-list");
+const dropElements = document.querySelectorAll(".drop-title");
+const dropListElements = document.querySelectorAll(".drop-list-element");
 
-dropTitle.addEventListener("click", () => {
-  console.log("Drop element clicked", dropList.style.display);
-  if (dropList.style.display === "") {
-    dropList.style.display = "block";
-    dropTitle.style.borderRadius = "5px 5px 0 0";
-  } else {
-    dropList.style.display = "";
-    dropTitle.style.borderRadius = "5px";
-  }
-});
+dropElements.forEach((dropElement) =>
+  dropElement.addEventListener("click", (e) => {
+    const dropElement = e.target.parentElement.parentElement;
+    const dropTitle = dropElement.querySelector(".drop-title");
+    const dropList = dropElement.querySelector(".drop-list");
 
-dropList.addEventListener("click", (e) => {
-  if (e.target.className !== "drop-list-element") return;
-  console.log(`${e.target.innerHTML} clicked`);
-});
+    if (dropList.style.display === "") {
+      dropList.style.display = "block";
+      dropTitle.style.borderRadius = "5px 5px 0 0";
+    } else {
+      dropList.style.display = "";
+      dropTitle.style.borderRadius = "5px";
+    }
+  })
+);
+
+dropListElements.forEach((element) =>
+  element.addEventListener("click", (e) => {
+    console.log(`${e.target.innerHTML} clicked`);
+  })
+);
