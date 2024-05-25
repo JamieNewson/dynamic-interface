@@ -16,26 +16,53 @@ for (let i = 0; i < carouselElements.length; i++) {
 const carousel = document.querySelector(".carousel-list");
 const navLeft = document.querySelector(".nav-left");
 const navRight = document.querySelector(".nav-right");
+const navDots = document.querySelectorAll(".nav-index-element");
 
 let currentCarouselPosition = 0;
+let autoScroll;
+const autoScrollTime = 10000;
+setTimeout(CalculateCarouselPosition, autoScrollTime);
 
 navLeft.addEventListener("click", () => {
-  calculateCarouselPosition();
-  carousel.style.right = `${currentCarouselPosition}px`;
+  clearTimeout(autoScroll);
+  CalculateCarouselPosition(true);
 });
 navRight.addEventListener("click", () => {
-  calculateCarouselPosition(true);
-  carousel.style.right = `${currentCarouselPosition}px`;
+  clearTimeout(autoScroll);
+  CalculateCarouselPosition();
 });
 
-function calculateCarouselPosition(toRight) {
+navDots.forEach((navDot) =>
+  navDot.addEventListener("click", () => {
+    currentCarouselPosition = navDot.id * (carousel.offsetWidth / 5);
+    carousel.style.right = `${currentCarouselPosition}px`;
+    clearTimeout(autoScroll);
+    UpdateNavIndex();
+    setTimeout(CalculateCarouselPosition, autoScrollTime);
+  })
+);
+
+function CalculateCarouselPosition(toLeft) {
   const carouselOffset = carousel.offsetWidth / 5;
   const maxCarouselPosition = carousel.offsetWidth - carouselOffset;
 
-  currentCarouselPosition += toRight ? carouselOffset : -carouselOffset;
+  currentCarouselPosition += toLeft ? -carouselOffset : carouselOffset;
 
-  if (toRight && currentCarouselPosition > maxCarouselPosition)
+  if (!toLeft && currentCarouselPosition > maxCarouselPosition)
     currentCarouselPosition = 0;
-  if (!toRight && currentCarouselPosition < 0)
+  if (toLeft && currentCarouselPosition < 0)
     currentCarouselPosition = maxCarouselPosition;
+
+  carousel.style.right = `${currentCarouselPosition}px`;
+  UpdateNavIndex();
+
+  autoScroll = setTimeout(CalculateCarouselPosition, autoScrollTime);
+}
+
+function UpdateNavIndex() {
+  const currentIndex = currentCarouselPosition / (carousel.offsetWidth / 5);
+  navDots.forEach((dot) => {
+    if (dot.id == currentIndex) dot.classList.add("active");
+    else dot.className = "nav-index-element";
+  });
 }
